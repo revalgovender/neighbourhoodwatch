@@ -24,8 +24,14 @@ provider:
         - dynamodb:DeleteItem
       Resource:
         - arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.REPORT_TABLE}
+    - Effect: Allow
+      Action:
+        - SNS:Publish
+      Resource:
+        - arn:aws:sns:${opt:region, self:provider.region}:769403605349:${self:provider.environment.SEND_REPORT_TOPIC}
   environment:
     REPORT_TABLE: reports
+    SEND_REPORT_TOPIC: SendReportTopic
     REGION: ${env:AWS_DEFAULT_REGION, 'eu-west-1'}
 
 functions:
@@ -52,3 +58,8 @@ resources:
         ProvisionedThroughput:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
+    MyTopic:
+      Type: AWS::SNS::Topic
+      Properties:
+        DisplayName: 'Neighbourhood Watch Alert!'
+        TopicName: ${self:provider.environment.SEND_REPORT_TOPIC}
