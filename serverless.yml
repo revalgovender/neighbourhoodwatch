@@ -1,5 +1,9 @@
 service: neighbourhood-watch
 
+package:
+  exclude:
+    - frontend/**
+
 provider:
   name: aws
   runtime: python3.7
