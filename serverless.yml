@@ -1,0 +1,51 @@
+service: neighbourhood-watch
+
+provider:
+  name: aws
+  runtime: python3.7
+  stage: dev
+  region: eu-west-1
+  stackTags:
+    Client: Shared
+    Department: Development
+    Product: Neighbourhood Watch
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+      Resource:
+        - arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.REPORT_TABLE}
+  environment:
+    REPORT_TABLE: reports
+    REGION: ${env:AWS_DEFAULT_REGION, 'eu-west-1'}
+
+functions:
+  add_report:
+    handler: handler.add_report
+    events:
+      - http:
+          path: report/create
+          method: post
+          cors: true
+      - sns: report-topic
+
+resources:
+  Resources:
+    reportTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:provider.environment.REPORT_TABLE}
+        AttributeDefinitions:
+          - AttributeName: message
+            AttributeType: S
+        KeySchema:
+          - AttributeName: message
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
