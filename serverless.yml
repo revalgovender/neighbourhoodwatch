@@ -32,7 +32,6 @@ functions:
           path: report/create
           method: post
           cors: true
-      - sns: report-topic
 
 resources:
   Resources:
