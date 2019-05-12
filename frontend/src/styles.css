@@ -3,4 +3,18 @@
 body {
   text-align: center;
   background-color: #f7d508;
+  padding-top: 30px;
+  font-size: 20px;
+}
+
+.hideElement {
+  display: none;
+}
+
+.showElement {
+  display: block;
+}
+
+header {
+  padding-bottom: 15px;
 }
