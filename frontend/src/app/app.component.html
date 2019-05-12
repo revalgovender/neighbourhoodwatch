@@ -20,7 +20,8 @@
       <div [ngClass]="{
       'hideElement': !showReportForm,
       'showElement': showReportForm
-      }">
+      }"
+      >
         <label>Describe your report</label>
         <br>
         <textarea id="reportMessage" type="text" [formControl]="reportMessage" class="form-control"></textarea>
@@ -31,6 +32,17 @@
         }">
           <i class="fa fa-exclamation-circle"></i> Please fill in a report
         </div>
+        <label>Pin</label>
+        <br>
+        <input id="pin" type="text" [formControl]="pin" class="form-control"/>
+        <br>
+        <div [ngClass]="{
+        'hideElement': !showPinValidationErrorMessage,
+        'alert alert-danger showElement': showPinValidationErrorMessage
+        }">
+          <i class="fa fa-exclamation-circle"></i> Please fill the correct pin
+        </div>
+        <br>
         <button class="btn btn-primary" (click)="submitReport()">
           <i class="fa fa-bell"></i>
           Alert Neighbours
@@ -40,7 +52,7 @@
       'hideElement': !showSuccessMessage,
       'alert alert-success showElement': showSuccessMessage
       }">
-        <p>I have alerted your neighbours for you. Stay safe. <i class="fa fa-thumbs-up"></i> </p>
+        <p>I have alerted your neighbours for you. Stay safe. <i class="fa fa-thumbs-up"></i></p>
       </div>
     </div>
   </div>

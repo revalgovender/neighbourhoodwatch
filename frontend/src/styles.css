@@ -1,7 +1,6 @@
 @import '~bootstrap/dist/css/bootstrap.min.css';
 
 body {
-  text-align: center;
   background-color: #f7d508;
   padding-top: 30px;
   font-size: 20px;
@@ -17,4 +16,5 @@ body {
 
 header {
   padding-bottom: 15px;
+  text-align: center;
 }
